@@ -383,6 +383,8 @@ tr:hover td{background:#f8faff}
           <div class="action-btn" onclick="sp('al-videos',null)"><div class="action-icon">▶️</div><div class="action-label">Videos</div></div>
           <div class="action-btn" onclick="sp('al-materiales',null)"><div class="action-icon">📁</div><div class="action-label">Materiales</div></div>
           <div class="action-btn" onclick="sp('al-instructores',null)"><div class="action-icon">👥</div><div class="action-label">Instructores</div></div>
+          <div class="action-btn" onclick="window.open(URL_FORM_ENTREGABLES,'_blank')"><div class="action-icon">📤</div><div class="action-label">Subir entregable</div></div>
+          <div class="action-btn" onclick="window.open(getMiCarpetaDrive(),'_blank')"><div class="action-icon">🗂️</div><div class="action-label">Mi carpeta Drive</div></div>
         </div>
       </div>
     </div>
@@ -702,6 +704,10 @@ tr:hover td{background:#f8faff}
     <div class="alert alert-info" style="margin-bottom:14px">
       📁 Sube tu entregable a Google Drive y pega el link aquí. Puedes registrar múltiples entregables por módulo en cualquier formato.
     </div>
+    <div style="display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap">
+      <button class="btn btn-gold" onclick="window.open(URL_FORM_ENTREGABLES,'_blank')">📤 Abrir formulario de entregable ↗</button>
+      <button class="btn btn-outline" onclick="window.open(getMiCarpetaDrive(),'_blank')">🗂️ Mi carpeta personal en Drive ↗</button>
+    </div>
     <div id="entregables-list"></div>
     <div style="background:var(--slate);border-radius:10px;border:0.5px solid var(--border);padding:16px;margin-top:12px">
       <div style="font-size:13px;font-weight:700;color:var(--navy);margin-bottom:12px">➕ Registrar nuevo entregable</div>
@@ -946,7 +952,12 @@ tr:hover td{background:#f8faff}
         <div><div style="display:flex;justify-content:space-between;font-size:12px;font-weight:700;margin-bottom:5px"><span>Módulos impartidos</span><span style="color:var(--teal)">5 / 13</span></div><div class="progress-bar" style="height:8px"><div class="progress-fill" style="width:38%;background:var(--teal)"></div></div></div>
         <div><div style="display:flex;justify-content:space-between;font-size:12px;font-weight:700;margin-bottom:5px"><span>Materiales entregados</span><span style="color:var(--gold)">8 / 13</span></div><div class="progress-bar" style="height:8px"><div class="progress-fill" style="width:62%"></div></div></div>
         <div><div style="display:flex;justify-content:space-between;font-size:12px;font-weight:700;margin-bottom:5px"><span>Facturas pagadas</span><span style="color:var(--red)">3 / 10</span></div><div class="progress-bar" style="height:8px"><div class="progress-fill" style="width:30%;background:var(--red)"></div></div></div>
-        <div><div style="display:flex;justify-content:space-between;font-size:12px;font-weight:700;margin-bottom:5px"><span>Alumnos registrados</span><span style="color:var(--blue)">0 / 20</span></div><div class="progress-bar" style="height:8px"><div class="progress-fill" style="width:0%;background:var(--blue)"></div></div></div>
+        <div><div style="display:flex;justify-content:space-between;font-size:12px;font-weight:700;margin-bottom:5px"><span>Alumnos registrados</span><span style="color:var(--blue)">3 / 20</span></div><div class="progress-bar" style="height:8px"><div class="progress-fill" style="width:15%;background:var(--blue)"></div></div></div>
+      </div>
+      <div style="margin-top:16px;display:flex;flex-direction:column;gap:8px">
+        <button class="btn btn-primary btn-sm" onclick="window.open(DRIVE_CONFIG.sheet,'_blank')" style="width:100%">📊 Ver Sheet de seguimiento ↗</button>
+        <button class="btn btn-outline btn-sm" onclick="window.open(DRIVE_CONFIG.carpetaAlumnos,'_blank')" style="width:100%">👥 Carpetas de alumnos en Drive ↗</button>
+        <button class="btn btn-outline btn-sm" onclick="window.open(DRIVE_CONFIG.raiz,'_blank')" style="width:100%">📁 Carpeta raíz del diplomado ↗</button>
       </div>
     </div>
   </div>
@@ -1539,14 +1550,43 @@ function abrirForm(key, modo){
 // USUARIOS DEL SISTEMA
 // ══════════════════════════════════════════
 const USERS = {
-  'admin': { pass:'crear2026',   name:'Maricela Soto',    role:'admin',     color:'#C0392B',  initials:'MS', roleLabel:'Administradora' },
-  'yadira': { pass:'yadira2026', name:'Yadira Reynoso',   role:'instructor',color:'#7c3aed',  initials:'YR', roleLabel:'Instructora', modulos:[2,3,6,13] },
-  'coparmex':{ pass:'cop2026',   name:'COPARMEX',         role:'coparmex',  color:'#0F7A6A',  initials:'CP', roleLabel:'Vista Ejecutiva' },
-  'alumno01':{ pass:'alumno2026',name:'Alumno 1',         role:'alumno',    color:'#1F4E8C',  initials:'A1', roleLabel:'Participante' },
+  'admin':    { pass:'crear2026',   name:'Maricela Soto',              role:'admin',     color:'#C0392B', initials:'MS', roleLabel:'Administradora',   email:'smc.maricela@gmail.com' },
+  'yadira':   { pass:'yadira2026',  name:'Yadira Reynoso',             role:'instructor',color:'#7c3aed', initials:'YR', roleLabel:'Instructora',       modulos:[2,3,6,13] },
+  'coparmex': { pass:'cop2026',     name:'COPARMEX',                   role:'coparmex',  color:'#0F7A6A', initials:'CP', roleLabel:'Vista Ejecutiva' },
+  'christian':{ pass:'Alta2026CE', name:'Christian Emmanuel Vázquez', role:'alumno',    color:'#1F4E8C', initials:'CE', roleLabel:'Participante',      email:'christian.emmanuel.vazquez@gmail.com', tel:'3335777024' },
+  'veronica': { pass:'Alta2026VG', name:'Verónica Gómez González',    role:'alumno',    color:'#0F7A6A', initials:'VG', roleLabel:'Participante',      email:'veronicagomezg43@gmail.com',           tel:'3336773884' },
+  'cesar':    { pass:'Alta2026CS', name:'César Sánchez Morales',      role:'alumno',    color:'#C9A84C', initials:'CS', roleLabel:'Participante',      email:'csanchez1520@gmail.com',               tel:'3338469943' },
 };
 
 let currentUser = null;
 let registeredUsers = [];
+
+// ══════════════════════════════════════════
+// ENTREGABLES — URL del formulario real
+// ══════════════════════════════════════════
+// ── CONFIG DRIVE ──
+const DRIVE_CONFIG = {
+  raiz: "https://drive.google.com/drive/folders/14BI9GEdX-QZeZpkG2CtmjXtB-QmwW_Cr",
+  sheet: "https://docs.google.com/spreadsheets/d/1SYbp4gCP5uQxTxx3pUo_LfPwkcCawYXUV5aaYHhrb5A/edit?usp=drivesdk",
+  carpetaAlumnos: "https://drive.google.com/drive/folders/1cMjgb8oJ5n2avGU6NVCOW_TBlY-jec8N",
+  formEntregables: "https://docs.google.com/forms/d/e/1FAIpQLSfwuWoa4f66vP8M79Bhrxh61xfPVUbs4jFBT9eRzHjlHs6_EQ/viewform",
+  alumnos: {
+    "christian": "https://drive.google.com/drive/folders/1s30T7eCwmlBx9SmNcVcWVENLwymcjqMP",
+    "veronica":  "https://drive.google.com/drive/folders/1zZyPMPAFHQvGibF02fTq3XXn3k5jQCrD",
+    "cesar":     "https://drive.google.com/drive/folders/1KXJ6qMoNnZseT50ZLlKhgeJgks0dPCqF"
+  }
+};
+
+const URL_FORM_ENTREGABLES = DRIVE_CONFIG.formEntregables;
+const URL_DRIVE_MATERIALES  = "https://drive.google.com/drive/folders/14BI9GEdX-QZeZpkG2CtmjXtB-QmwW_Cr";
+
+// Función para obtener carpeta personal del alumno logueado
+function getMiCarpetaDrive() {
+  if (currentUser && currentUser.role === 'alumno' && DRIVE_CONFIG.alumnos[currentUser.username]) {
+    return DRIVE_CONFIG.alumnos[currentUser.username];
+  }
+  return DRIVE_CONFIG.carpetaAlumnos;
+}
 
 // ══════════════════════════════════════════
 // LOGOS BASE64 (se inyectan via JS)
