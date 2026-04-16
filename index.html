@@ -1879,13 +1879,15 @@ function renderAccesos(){
     wrap.innerHTML = '<div style="text-align:center;padding:30px;color:var(--muted);font-size:13px;background:var(--slate);border-radius:10px;border:0.5px dashed var(--border)"><div style="font-size:24px;margin-bottom:8px">👤</div>Registra alumnos en el panel de Usuarios.</div>';
     return;
   }
-  let html = '<table><thead><tr><th>Nombre</th><th>Usuario</th><th>Correo</th><th>Estado</th><th>Acciones</th></tr></thead><tbody>';
+  let html = '<table><thead><tr><th>Nombre</th><th>Usuario</th><th>Correo</th><th>Carpeta Drive</th><th>Estado</th><th>Acciones</th></tr></thead><tbody>';
   alumnos.forEach((u,i)=>{
     const active = u.active!==false;
+    const carpeta = u.carpeta || DRIVE_CONFIG.alumnos[u.user] || '';
     html += `<tr>
       <td style="font-weight:700">${u.nombre}</td>
       <td><code style="font-size:12px">${u.user}</code></td>
       <td style="font-size:12px">${u.email||'—'}</td>
+      <td>${carpeta ? `<a href="${carpeta}" target="_blank" style="font-size:11px;color:var(--blue)">📁 Ver carpeta ↗</a>` : '<span style="color:var(--muted);font-size:11px">—</span>'}</td>
       <td><span class="badge ${active?'b-done':'b-red'}">${active?'✓ Activo':'✕ Inactivo'}</span></td>
       <td style="display:flex;gap:6px">
         <button class="btn btn-outline btn-sm" onclick="quickReset(${i})" style="font-size:11px">🔑 Reset</button>
@@ -2261,7 +2263,35 @@ function openFormHTML(tipo){
 }
 
 window.onload = function(){
-  // Logos already embedded in img src
+  // Inicializar registeredUsers desde USERS hardcodeados
+  registeredUsers = [];
+  Object.keys(USERS).forEach(function(username){
+    const u = USERS[username];
+    if(u.role === 'alumno'){
+      registeredUsers.push({
+        nombre:  u.name,
+        rol:     'alumno',
+        email:   u.email  || '',
+        tel:     u.tel    || '',
+        user:    username,
+        pass:    u.pass,
+        empresa: '',
+        active:  true,
+        carpeta: DRIVE_CONFIG.alumnos[username] || ''
+      });
+      // También registrar en USERS con rol para compatibilidad
+      USERS[username].rol = 'alumno';
+    }
+  });
+
+  // Conectar form real a FORMS_CONFIG si están vacíos
+  const FORM_REAL = 'https://docs.google.com/forms/d/e/1FAIpQLSfwuWoa4f66vP8M79Bhrxh61xfPVUbs4jFBT9eRzHjlHs6_EQ/viewform';
+  const SHEET_REAL = 'https://docs.google.com/spreadsheets/d/1HNVrVPla-quStRPclvZ0E5OaRJDnHhX4_z2N0vqoWQw/edit';
+  Object.keys(FORMS_CONFIG).forEach(function(k){
+    if(!FORMS_CONFIG[k].url_alumno)    FORMS_CONFIG[k].url_alumno    = FORM_REAL;
+    if(!FORMS_CONFIG[k].url_respuestas) FORMS_CONFIG[k].url_respuestas = SHEET_REAL;
+  });
+
   renderEntregables();
   renderFormsConfigTable();
   renderSheetsList();
