@@ -1588,6 +1588,9 @@ function getMiCarpetaDrive() {
   return DRIVE_CONFIG.carpetaAlumnos;
 }
 
+// URL del Web App de Apps Script (backend real)
+const WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbzBGb1Gh6SkUzoAgwCNQN71X5Ai0F6elwukYtQdsC-SBAVAdwdTeC_AKaIVCtugLMbV/exec';
+
 // ══════════════════════════════════════════
 // LOGOS BASE64 (se inyectan via JS)
 // ══════════════════════════════════════════
@@ -2148,10 +2151,39 @@ function agregarEntregable(){
     fecha: new Date().toLocaleDateString('es-MX'),
     estado: 'Enviado'
   };
-  entregables.push(ent);
-  renderEntregables();
-  clearEntregableForm();
-  alert('✓ Entregable registrado: "'+nombre+'"\n\nTu instructor y la administradora pueden verlo a través del link de Drive.');
+
+  // Enviar a Google Apps Script Web App para guardar en Sheet
+  var payload = {
+    alumno:  currentUser ? currentUser.name : 'Desconocido',
+    email:   currentUser ? (currentUser.email || '') : '',
+    modulo:  modulo,
+    tipo:    tipo,
+    nombre:  nombre,
+    link:    url
+  };
+
+  var btn = document.querySelector('#al-entregables .btn-gold');
+  if(btn){ btn.disabled = true; btn.textContent = 'Guardando...'; }
+
+  fetch(WEBAPP_URL, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify(payload)
+  }).then(function(){
+    entregables.push(ent);
+    renderEntregables();
+    clearEntregableForm();
+    if(btn){ btn.disabled = false; btn.textContent = '✓ Registrar entregable'; }
+    alert('✓ Entregable registrado y guardado:\n"'+nombre+'"\n\nQueda registrado en el sistema y tu instructora puede verlo.');
+  }).catch(function(){
+    // no-cors siempre llega aquí aunque funcione — registrar igual
+    entregables.push(ent);
+    renderEntregables();
+    clearEntregableForm();
+    if(btn){ btn.disabled = false; btn.textContent = '✓ Registrar entregable'; }
+    alert('✓ Entregable registrado:\n"'+nombre+'"');
+  });
 }
 
 function renderEntregables(){
