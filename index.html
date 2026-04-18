@@ -1550,16 +1550,22 @@ function abrirForm(key, modo){
 // USUARIOS DEL SISTEMA
 // ══════════════════════════════════════════
 const USERS = {
-  'admin':    { pass:'crear2026',   name:'Maricela Soto',              role:'admin',     color:'#C0392B', initials:'MS', roleLabel:'Administradora',   email:'smc.maricela@gmail.com' },
-  'yadira':   { pass:'yadira2026',  name:'Yadira Reynoso',             role:'instructor',color:'#7c3aed', initials:'YR', roleLabel:'Instructora',       modulos:[2,3,6,13] },
-  'coparmex': { pass:'cop2026',     name:'COPARMEX',                   role:'coparmex',  color:'#0F7A6A', initials:'CP', roleLabel:'Vista Ejecutiva' },
-  'christian':{ pass:'Alta2026CE', name:'Christian Emmanuel Vázquez', role:'alumno',    color:'#1F4E8C', initials:'CE', roleLabel:'Participante',      email:'christian.emmanuel.vazquez@gmail.com', tel:'3335777024' },
-  'veronica': { pass:'Alta2026VG', name:'Verónica Gómez González',    role:'alumno',    color:'#0F7A6A', initials:'VG', roleLabel:'Participante',      email:'veronicagomezg43@gmail.com',           tel:'3336773884' },
-  'juancarlos':{ pass:'Alta2026JC', name:'Juan Carlos Diaz Ortega', role:'alumno', color:'#1F4E8C', initials:'JC', roleLabel:'Participante', email:'jcdo835@gmail.com', tel:'3331002501' },
-  'itzel':    { pass:'Alta2026IT', name:'Itzel Alejandra Trujillo Rojas', role:'alumno', color:'#C0392B', initials:'IT', roleLabel:'Participante', email:'coordinacion.direccion@grupoanqa.mx', tel:'3319661243' },
-  'esmeralda':{ pass:'Alta2026ES', name:'Esmeralda Carrillo Flores', role:'alumno', color:'#0070C0', initials:'EC', roleLabel:'Participante', email:'esmecf@bdalimentos.org', tel:'3315993904' },
-  'ahtziri':  { pass:'Alta2026AH', name:'Ahtziri Munoz', role:'alumno', color:'#C9A84C', initials:'AH', roleLabel:'Participante', email:'aht.mreal@gmail.com', tel:'3330186178' },
-  'cesar':    { pass:'Alta2026CS', name:'César Sánchez Morales',      role:'alumno',    color:'#C9A84C', initials:'CS', roleLabel:'Participante',      email:'csanchez1520@gmail.com',               tel:'3338469943' },
+  'admin':     { pass:'crear2026',   name:'Maricela Soto',                     role:'admin',      color:'#C0392B', initials:'MS', roleLabel:'Administradora',  email:'smc.maricela@gmail.com' },
+  'yadira':    { pass:'yadira2026',  name:'Yadira Reynoso',                    role:'instructor', color:'#7c3aed', initials:'YR', roleLabel:'Instructora',      modulos:[2,3,6,13] },
+  'coparmex':  { pass:'cop2026',     name:'COPARMEX',                          role:'coparmex',   color:'#0F7A6A', initials:'CP', roleLabel:'Vista Ejecutiva' },
+  'christian': { pass:'Alta2026CE',  name:'Christian Emmanuel Vazquez',        role:'alumno',     color:'#1F4E8C', initials:'CE', roleLabel:'Participante',     email:'christian.emmanuel.vazquez@gmail.com', tel:'3335777024' },
+  'veronica':  { pass:'Alta2026VG',  name:'Veronica Gomez Gonzalez',           role:'alumno',     color:'#0F7A6A', initials:'VG', roleLabel:'Participante',     email:'veronicagomezg43@gmail.com',          tel:'3336773884' },
+  'cesar':     { pass:'Alta2026CS',  name:'Cesar Sanchez Morales',             role:'alumno',     color:'#C9A84C', initials:'CS', roleLabel:'Participante',     email:'csanchez1520@gmail.com',              tel:'3338469943' },
+  'carlos':    { pass:'Alta2026CA',  name:'Carlos Aurelio Rodriguez Curiel',   role:'alumno',     color:'#185FA5', initials:'CR', roleLabel:'Participante',     email:'carcuriel78@gmail.com',               tel:'3318922000' },
+  'estrella':  { pass:'Alta2026EG',  name:'Estrella Garcia Escobar',           role:'alumno',     color:'#3B6D11', initials:'EG', roleLabel:'Participante',     email:'estrellag84@gmail.com',               tel:'3334490094' },
+  'melissa':   { pass:'Alta2026MP',  name:'Melissa Patarroyo Perez',           role:'alumno',     color:'#854F0B', initials:'MP', roleLabel:'Participante',     email:'mel.patarroyo@gmail.com',             tel:'3314369475' },
+  'miriam':    { pass:'Alta2026MG',  name:'Miriam Guzman Ledezma',             role:'alumno',     color:'#A32D2D', initials:'MG', roleLabel:'Participante',     email:'miriamg.mcc@gmail.com',               tel:'3335571201' },
+  'alfredo':   { pass:'Alta2026AM',  name:'Alfredo Mora',                      role:'alumno',     color:'#534AB7', initials:'AM', roleLabel:'Participante',     email:'alfred.mr1221@gmail.com',             tel:'3335788427' },
+  'arturo':    { pass:'Alta2026AD',  name:'Arturo Diaz Barriga Sosa',          role:'alumno',     color:'#0F6E56', initials:'AD', roleLabel:'Participante',     email:'arturodiazbs@gmail.com',              tel:'3312893322' },
+  'itzel':     { pass:'Alta2026IT',  name:'Itzel Alejandra Trujillo Rojas',    role:'alumno',     color:'#C0392B', initials:'IT', roleLabel:'Participante',     email:'coordinacion.direccion@grupoanqa.mx', tel:'3319661243' },
+  'esmeralda': { pass:'Alta2026ES',  name:'Esmeralda Carrillo Flores',         role:'alumno',     color:'#0070C0', initials:'EC', roleLabel:'Participante',     email:'esmecf@bdalimentos.org',              tel:'3315993904' },
+  'ahtziri':   { pass:'Alta2026AH',  name:'Ahtziri Munoz',                     role:'alumno',     color:'#C9A84C', initials:'AH', roleLabel:'Participante',     email:'aht.mreal@gmail.com',                 tel:'3330186178' },
+  'juancarlos':{ pass:'Alta2026JC',  name:'Juan Carlos Diaz Ortega',           role:'alumno',     color:'#1F4E8C', initials:'JC', roleLabel:'Participante',     email:'jcdo835@gmail.com',                   tel:'3331002501' },
 };
 
 let currentUser = null;
